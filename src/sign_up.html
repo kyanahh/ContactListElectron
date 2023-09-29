@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Login</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+  <style>
+      body {
+        background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('https://freerangestock.com/sample/143243/laptop-and-smartphone-on-table--copy-space.jpg'); 
+        height: 100vh; 
+        background-repeat: no-repeat; 
+        background-position: center; 
+        background-size: cover;
+      }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row pt-5">
+      <div class="col-md-4 pt-5 mx-auto mt-4">
+        <div class="card shadow">
+          <div class="card-body">
+
+            <h1 class="text-center fw-bold fs-4 mt-4 mb-3">SIGN UP</h1>
+
+            <form id="signUpForm">
+
+              <div class="form-group">
+                <div class="input-group pt-3 pb-3 px-3">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group pb-3 px-3">
+                  <input type="text" class="form-control" id="email" name="email" placeholder="Email address" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group pb-3 px-3">
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group pb-3 px-3">
+                  <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required />
+                </div>
+              </div>
+
+              <div class="form-group text-center">
+                <button type="submit" class="btn btn-dark btn-block fw-bold mb-2 mx-auto px-5 mb-3"
+                style="width: 308px;">SIGN UP</button>
+              </div>
+
+            </form>
+
+            <div class="text-center">
+              <p>Already have an account? <a id="login" class="text-decoration-none">Login here.</a></p>
+            </div>
+
+            <div id="error-message" style="color: red;" class="text-center"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="./connection.js"></script>
+  <script type="text/javascript">
+
+    $("#signUpForm").submit((event) => {
+      event.preventDefault();
+
+      const name = $("#name").val();
+      const email = $("#email").val();
+      const password = $("#password").val();
+      const confirmPassword = $("#confirm_password").val();
+
+      if (password !== confirmPassword) {
+        $("#error-message").html("Passwords don't match");
+        return;
+      }
+
+      $.ajax({
+        method: "POST",
+        url: BASE_URL + "/sign_up.php",
+        data: { name, email, password },
+        success: (response) => {
+          alert(response);
+          if (response === "Registration successful.") {
+            window.location.href = "login.html";
+          }
+        }
+      })
+    });
+
+    $("#login").click(() => (window.location.href = "login.html"));
+  </script>
+</body>
+
+</html>
